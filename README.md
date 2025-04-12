@@ -18,7 +18,20 @@ A powerful, colorful information gathering tool designed for Termux that allows 
 ## Installation
 
 ```bash
+# Обновляем пакеты
+pkg update -y && pkg upgrade -y
+
+# Устанавливаем Git и Python
+pkg install -y git python
+
+# Качаем репозиторий
 git clone https://github.com/FENRTH/DoxSoft.git
-cd DoxSoft
+
+# Переходим в папку
+cd DoxTool-XD
+
+# Даём права на установку
 chmod +x install.sh
+
+# Запускаем установку
 ./install.sh
