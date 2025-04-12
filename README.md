@@ -18,7 +18,7 @@ A powerful, colorful information gathering tool designed for Termux that allows 
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/DoxSoft.git
+git clone https://github.com/FENRTH/DoxSoft.git
 cd DoxSoft
 chmod +x install.sh
 ./install.sh
