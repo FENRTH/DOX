@@ -13,24 +13,28 @@ DoxTool XD — это мощный инструмент для сбора инф
 
 🚀 Установка (Termux)
 bash
-Copy
-# 1. Обновляем пакеты
+# 1. Обязательно обновляем пакеты
 pkg update -y && pkg upgrade -y
 
-# 2. Устанавливаем зависимости
-pkg install -y git python
+# 2. Ставим ВСЕ необходимые зависимости
+pkg install -y git python libxml2 libxslt clang make pkg-config openssl
 
-# 3. Качаем репозиторий
+# 3. Устанавливаем pip и обновляем его
+python -m ensurepip --upgrade
+pip install --upgrade pip
+
+# 4. Качаем репозиторий
 git clone https://github.com/FENRTH/DoxTool-XD.git
-
-# 4. Заходим в папку
 cd DoxTool-XD
 
-# 5. Даём права на установку
-chmod +x install.sh
+# 5. Альтернативная установка (без проблемных модулей)
+pip install requests bs4 phonenumbers python-whois pyfiglet termcolor
 
-# 6. Запускаем установку
-./install.sh
+# 6. Если нужно lxml (для парсинга) - ставим с флагами
+LDFLAGS="-L/data/data/com.termux/files/usr/lib" CFLAGS="-I/data/data/com.termux/files/usr/include" pip install lxml
+
+# 7. Запускаем!
+python doxtool.py
 🔑 Запуск
 bash
 python doxtool.py
