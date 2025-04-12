@@ -25,7 +25,7 @@ pip install --upgrade pip
 
 # 4. Качаем репозиторий
 git clone https://github.com/FENRTH/DoxTool-XD.git
-cd DoxTool-XD
+#далее переходим в папку cd DoxTool-XD
 
 # 5. Альтернативная установка (без проблемных модулей)
 pip install requests bs4 phonenumbers python-whois pyfiglet termcolor
