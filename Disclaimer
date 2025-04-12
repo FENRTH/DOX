@@ -1,0 +1,153 @@
+
+## Python Code (doxsoft.py)
+
+```python
+#!/usr/bin/env python3
+import os
+import sys
+import requests
+import phonenumbers
+from time import sleep
+from termcolor import colored
+from pyfiglet import Figlet
+
+# Password protection
+PASSWORD = "SOFT"
+
+def clear_screen():
+    os.system('clear' if os.name == 'posix' else 'cls')
+
+def print_banner():
+    f = Figlet(font='slant')
+    print(colored(f.renderText('DoxSoft'), 'cyan'))
+    print(colored("="*60, 'blue'))
+    print(colored("Advanced Information Gathering Tool", 'yellow'))
+    print(colored("For Educational Purposes Only!", 'red'))
+    print(colored("="*60, 'blue'))
+    print("\n")
+
+def check_password():
+    attempts = 3
+    while attempts > 0:
+        pwd = input(colored("Enter password: ", 'magenta'))
+        if pwd == PASSWORD:
+            return True
+        else:
+            attempts -= 1
+            print(colored(f"Wrong password! {attempts} attempts remaining.", 'red'))
+    return False
+
+def global_search():
+    clear_screen()
+    print(colored("\n[+] Global Search Module", 'green'))
+    query = input(colored("\nEnter name/username/email: ", 'yellow'))
+    
+    print(colored("\n[+] Searching across multiple platforms...", 'cyan'))
+    sleep(2)
+    
+    # Simulated results
+    print(colored("\nPossible matches found:", 'green'))
+    print(colored(f"- Facebook: https://facebook.com/{query}", 'blue'))
+    print(colored(f"- Instagram: https://instagram.com/{query}", 'magenta'))
+    print(colored(f"- Twitter: https://twitter.com/{query}", 'cyan'))
+    print(colored(f"- LinkedIn: https://linkedin.com/in/{query}", 'yellow'))
+    
+    input(colored("\nPress Enter to continue...", 'grey'))
+
+def phone_search():
+    clear_screen()
+    print(colored("\n[+] Phone Number Search Module", 'green'))
+    number = input(colored("\nEnter phone number (with country code): ", 'yellow'))
+    
+    try:
+        parsed = phonenumbers.parse(number, None)
+        if not phonenumbers.is_valid_number(parsed):
+            print(colored("Invalid phone number!", 'red'))
+            return
+            
+        print(colored("\n[+] Analyzing phone number...", 'cyan'))
+        sleep(2)
+        
+        # Simulated results
+        print(colored("\nPossible information:", 'green'))
+        print(colored(f"- Country: {phonenumbers.region_code_for_number(parsed)}", 'blue'))
+        print(colored("- Carrier: Unknown", 'magenta'))
+        print(colored("- Possible WhatsApp account found", 'cyan'))
+        print(colored("- Possible Truecaller entry", 'yellow'))
+        
+    except Exception as e:
+        print(colored(f"Error: {str(e)}", 'red'))
+    
+    input(colored("\nPress Enter to continue...", 'grey'))
+
+def telegram_search():
+    clear_screen()
+    print(colored("\n[+] Telegram Search Module", 'green'))
+    username = input(colored("\nEnter Telegram username (@username): ", 'yellow'))
+    
+    print(colored("\n[+] Searching Telegram...", 'cyan'))
+    sleep(2)
+    
+    # Simulated results
+    print(colored("\nPossible information:", 'green'))
+    print(colored(f"- Profile: https://t.me/{username}", 'blue'))
+    print(colored("- Last seen: Recently", 'magenta'))
+    print(colored("- Possible connected phone number", 'cyan'))
+    
+    input(colored("\nPress Enter to continue...", 'grey'))
+
+def email_search():
+    clear_screen()
+    print(colored("\n[+] Email Search Module", 'green'))
+    email = input(colored("\nEnter email address: ", 'yellow'))
+    
+    print(colored("\n[+] Analyzing email...", 'cyan'))
+    sleep(2)
+    
+    # Simulated results
+    print(colored("\nPossible information:", 'green'))
+    print(colored(f"- Breach data: 3 breaches found", 'red'))
+    print(colored("- Possible social media accounts", 'blue'))
+    print(colored("- Domain information available", 'magenta'))
+    
+    input(colored("\nPress Enter to continue...", 'grey'))
+
+def main_menu():
+    while True:
+        clear_screen()
+        print_banner()
+        
+        print(colored("Main Menu:", 'green'))
+        print(colored("1. Global Search", 'cyan'))
+        print(colored("2. Phone Number Lookup", 'magenta'))
+        print(colored("3. Telegram Username Search", 'yellow'))
+        print(colored("4. Email Address Investigation", 'blue'))
+        print(colored("5. Exit", 'red'))
+        
+        choice = input(colored("\nSelect an option: ", 'green'))
+        
+        if choice == '1':
+            global_search()
+        elif choice == '2':
+            phone_search()
+        elif choice == '3':
+            telegram_search()
+        elif choice == '4':
+            email_search()
+        elif choice == '5':
+            print(colored("\nExiting DoxSoft...", 'red'))
+            sleep(1)
+            sys.exit()
+        else:
+            print(colored("Invalid choice!", 'red'))
+            sleep(1)
+
+if __name__ == "__main__":
+    clear_screen()
+    print_banner()
+    
+    if not check_password():
+        print(colored("Access denied!", 'red'))
+        sys.exit()
+    
+    main_menu()
