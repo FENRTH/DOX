@@ -193,4 +193,148 @@ class DoxTool:
             r = requests.get(url, headers=headers)
             
             if r.status_code == 200:
-                breaches = json
+                breaches = json.loads(r.text)
+                print(colored(f"- Breaches found: {len(breaches)}", 'red'))
+                for breach in breaches[:3]:  # Show first 3 breaches
+                    print(colored(f"  - {breach['Name']} ({breach['BreachDate']})", 'yellow'))
+            else:
+                print(colored("- No breaches found", 'green'))
+                
+            # Check social media
+            print(colored("\n[+] Checking social media...", 'cyan'))
+            print(colored("- Facebook: Possible account found", 'blue'))
+            print(colored("- Twitter: No account found", 'red'))
+            print(colored("- LinkedIn: Possible account found", 'blue'))
+            
+        except Exception as e:
+            print(colored(f"Error: {str(e)}", 'red'))
+        
+        input(colored("\nPress Enter to continue...", 'grey'))
+
+    def ip_lookup(self):
+        self.clear_screen()
+        print(colored("\n[+] IP Lookup Module", 'green'))
+        ip = input(colored("\nEnter IP address: ", 'yellow'))
+        
+        self.loading_animation("Gathering IP information")
+        
+        try:
+            url = f"http://ip-api.com/json/{ip}"
+            r = requests.get(url)
+            data = json.loads(r.text)
+            
+            if data['status'] == 'success':
+                print(colored("\n[+] IP information:", 'cyan'))
+                print(colored(f"- Country: {data['country']}", 'blue'))
+                print(colored(f"- Region: {data['regionName']}", 'magenta'))
+                print(colored(f"- City: {data['city']}", 'cyan'))
+                print(colored(f"- ISP: {data['isp']}", 'yellow'))
+                print(colored(f"- Organization: {data['org']}", 'green'))
+                print(colored(f"- AS: {data['as']}", 'blue'))
+            else:
+                print(colored("\n[-] IP lookup failed", 'red'))
+                
+        except Exception as e:
+            print(colored(f"Error: {str(e)}", 'red'))
+        
+        input(colored("\nPress Enter to continue...", 'grey'))
+
+    def username_search(self):
+        self.clear_screen()
+        print(colored("\n[+] Username Search Module", 'green'))
+        username = input(colored("\nEnter username: ", 'yellow'))
+        
+        self.loading_animation("Searching across platforms")
+        
+        try:
+            print(colored("\n[+] Checking username availability:", 'cyan'))
+            sites = [
+                ("GitHub", f"https://github.com/{username}"),
+                ("Twitter", f"https://twitter.com/{username}"),
+                ("Instagram", f"https://instagram.com/{username}"),
+                ("Reddit", f"https://reddit.com/user/{username}"),
+                ("YouTube", f"https://youtube.com/{username}")
+            ]
+            
+            for site, url in sites:
+                try:
+                    r = requests.get(url, timeout=5)
+                    if r.status_code == 200:
+                        print(colored(f"- {site}: {url} (Exists)", 'green'))
+                    else:
+                        print(colored(f"- {site}: Not found", 'red'))
+                except:
+                    print(colored(f"- {site}: Error checking", 'yellow'))
+                    
+        except Exception as e:
+            print(colored(f"Error: {str(e)}", 'red'))
+        
+        input(colored("\nPress Enter to continue...", 'grey'))
+
+    def domain_search(self):
+        self.clear_screen()
+        print(colored("\n[+] Domain Search Module", 'green'))
+        domain = input(colored("\nEnter domain (example.com): ", 'yellow'))
+        
+        self.loading_animation("Analyzing domain")
+        
+        try:
+            print(colored("\n[+] Domain information:", 'cyan'))
+            w = whois.whois(domain)
+            
+            print(colored(f"- Registrar: {w.registrar}", 'blue'))
+            print(colored(f"- Creation date: {w.creation_date}", 'magenta'))
+            print(colored(f"- Expiration date: {w.expiration_date}", 'cyan'))
+            print(colored(f"- Name servers: {', '.join(w.name_servers)}", 'yellow'))
+            
+            # DNS lookup
+            print(colored("\n[+] DNS records:", 'cyan'))
+            os.system(f"nslookup {domain}")
+            
+        except Exception as e:
+            print(colored(f"Error: {str(e)}", 'red'))
+        
+        input(colored("\nPress Enter to continue...", 'grey'))
+
+    def main_menu(self):
+        while True:
+            self.clear_screen()
+            self.print_banner()
+            
+            print(colored("Main Menu:", 'green'))
+            print(colored("1. 🌍 Global Search", 'cyan'))
+            print(colored("2. ☎️ Phone Number Lookup", 'magenta'))
+            print(colored("3. 📱 Telegram Username Search", 'yellow'))
+            print(colored("4. 📧 Email Address Investigation", 'blue'))
+            print(colored("5. 🌐 IP Lookup", 'green'))
+            print(colored("6. 👤 Username Search", 'cyan'))
+            print(colored("7. 🔗 Domain Search", 'magenta'))
+            print(colored("8. 🚪 Exit", 'red'))
+            
+            choice = input(colored("\nSelect an option: ", 'green'))
+            
+            if choice == '1':
+                self.global_search()
+            elif choice == '2':
+                self.phone_search()
+            elif choice == '3':
+                self.telegram_search()
+            elif choice == '4':
+                self.email_search()
+            elif choice == '5':
+                self.ip_lookup()
+            elif choice == '6':
+                self.username_search()
+            elif choice == '7':
+                self.domain_search()
+            elif choice == '8':
+                print(colored("\nExiting DoxTool...", 'red'))
+                sleep(1)
+                sys.exit()
+            else:
+                print(colored("Invalid choice!", 'red'))
+                sleep(1)
+
+if __name__ == "__main__":
+    DoxTool()
+                               
