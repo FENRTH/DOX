@@ -25,10 +25,10 @@ pkg update -y && pkg upgrade -y
 pkg install -y git python
 
 # Качаем репозиторий
-git clone https://github.com/FENRTH/DoxSoft.git
+git clone https://github.com/FENRTH/DoxTools-XDt.git
 
 # Переходим в папку
-cd DoxTool-XD
+cd DoxTools-XD
 
 # Даём права на установку
 chmod +x install.sh
